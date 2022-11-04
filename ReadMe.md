@@ -190,10 +190,104 @@ class CustomUserTests(TestCase):
 >git status
 RESPOND:
 >d:\#_DEV_Docker\wsv4\mfd_site(main)
+Create new Repo in github (MedoFayed/mfd_site)
+update it from local:
+git remote add origin https://github.com/MedoFayed/mfd_site.git
+git push -u origin main
+RESPOND:
+d:\#_DEV_Docker\wsv4\mfd_site(main -> origin)
+--------------------------------------------------
+=====================================================
+Chapter 5: Pages App:
+----------------------
+Let’s build a homepage for our new project.
+> docker-compose exec web python manage.py startapp pages
+Update INSTALLED_APPS (settings.py).
+	"pages.apps.PagesConfig", # new
+Update TEMPLATES (settings.py)
+	"DIRS": [BASE_DIR / "templates"], # new
+>mkdir templates
+Create templates/_base.html & templates/home.html
+
+URLs and Views: ------------------
+# mysite/urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("pages.urls")),
+]
+----------------------------------
+Create pages/urls.py
+# pages/urls.py
+from django.urls import path
+from .views import HomePageView
+
+urlpatterns = [
+  path("", HomePageView.as_view(), name="home"),
+]
+---------------------------------
+# pages/views.py
+from django.views.generic import TemplateView
+
+class HomePageView(TemplateView):
+	template_name = "home.html"
+---------------------------------
+>docker-compose down
+>docker-compose up -d
+Test in browser
+....
+EDIT 
+# pages/tests.py
+from django.test import SimpleTestCase
+from django.urls import reverse
+
+class HomepageTests(SimpleTestCase):
+  def test_url_exists_at_correct_location(self):
+    response = self.client.get("/")
+    self.assertEqual(response.status_code, 200)
+
+  def test_homepage_url_name(self):
+    response = self.client.get(reverse("home"))
+    self.assertEqual(response.status_code, 200)
+--------------------------------------------------------
+TEST:
+RUN:
+>docker-compose exec web python manage.py test pages
+------------------------------------------------------------
+Testing Templates:
+Add to # pages/tests.py
+
+  def test_homepage_template(self): # new
+    response = self.client.get("/")
+    self.assertTemplateUsed(response, "home.html")
+--------------------------------------------------
+Add to # pages/tests.py
+--------------------------------------------------
+Testing HTML
+Add to # pages/tests.py
+
+  def test_homepage_contains_correct_html(self): # new
+    response = self.client.get("/")
+    self.assertContains(response, "home page")
+
+  def test_homepage_does_not_contain_incorrect_html(self): # new
+    response = self.client.get("/")
+    self.assertNotContains(response, "Hi there! I should not be on the page.")
+--------------------------------------------------
+>docker-compose exec web python manage.py test
+===========================================================
+setUp()
+-------
+
+
+
+
+
 --------------------------------------------------
 
 
-
 --------------------------------------------------
 
 
@@ -204,6 +298,7 @@ RESPOND:
 
 
 --------------------------------------------------
+
 -------------------------------
 
 > 
