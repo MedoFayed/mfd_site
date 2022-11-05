@@ -288,125 +288,18 @@ Git
 > git push -u origin main
 --------------------------------------------------
 ===========================================================
-Chapter 6: User Registration
-============================
-Auth App: -------------
-Django provides us with the necessary views and urls which means we only need to update a template for things to work.
-* Make sure the auth app is included in our INSTALLED_APPS setting ("django.contrib.auth",).
-Auth URLs and Views: -------------
-To use Django’s built-in auth app we must explicitly add it to our mfd_site/urls.py file. The easiest approach is to use accounts/ as the prefix.
 
-# mfd_site/urls.py
-from django.contrib import admin
-from django.urls import path, include
 
-urlpatterns = [
-	# Django admin
-	path("admin/", admin.site.urls),
-	# User management
-	path("accounts/", include("django.contrib.auth.urls")), # new
-	# Local apps
-	path("", include("pages.urls")),
-]
-"""
-# these are automatically included
-accounts/login/ [name="login"]
-accounts/logout/ [name="logout"]
-accounts/password_change/ [name="password_change"]
-accounts/password_change/done/ [name="password_change_done"]
-accounts/password_reset/ [name="password_reset"]
-accounts/password_reset/done/ [name="password_reset_done"]
-accounts/reset/<uidb64>/<token>/ [name="password_reset_confirm"]
-accounts/reset/done/ [name="password_reset_complete"]
-"""
-IMPORTANT: Read bottom paragraph of page 90
+
+
+
 --------------------------------------------------
-Homepage:
-Update home.html to tell if user & who is loged in
-Check code....
-  {% if user.is_authenticated %}
-    <p>Hi {{ user.email }}!</p>
-  {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-  {% endif %}
+
+
 --------------------------------------------------
-Following the code activated automatically by adding to mysite/urls.py:
-	path("accounts/", include("django.contrib.auth.urls")),
--------------------------------
-# django/contrib/auth/urls.py
-from django.contrib.auth import views
-from django.urls import path
 
-urlpatterns = [
-	path('login/', views.LoginView.as_view(), name='login'),
-	path('logout/', views.LogoutView.as_view(), name='logout'),
-	path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
-	path('password_change/done/', views.PasswordChangeDoneView.as_view(), name='password_change_done'),
-	path('password_reset/', views.PasswordResetView.as_view(),
-	name='password_reset'),
-	path('password_reset/done/', views.PasswordResetDoneView.as_view(),
-	name='password_reset_done'),
-	path('reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(),
-	name='password_reset_confirm'),
-	path('reset/done/', views.PasswordResetCompleteView.as_view(),
-	name='password_reset_complete'),
-]
+
 --------------------------------------------------
-try [127.0.0.1:8000/accounts/login] in browser,
-Replies:
-TemplateDoesNotExist at /accounts/login/
-registration/login.html.
-------------------------
-Create templates/registration/login.html
-<!-- templates/registration/login.html -->
-{% extends "_base.html" %}
-
-{% block title %}Log In{% endblock title %}
-
-{% block content %}
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
-{% endblock content %}
-----------------------------------
-Then refresh browswer. will show log in
-----------------------------------------
-Logging in will durect you to [http://127.0.0.1:8000/accounts/profile/]
-That does not exist.
-Add the following to bottom of settings.py
-LOGIN_REDIRECT_URL = "home" # new
---------------------------------------------------
-Log Out: ----->
-Sign Up: ----->
-* Basic steps:
-• create an app-level accounts/urls.py file
-• update the project-level django_project/urls.py to point to the accounts app
-• add a view called SignupPageView
-• create a signup.html template file
-• update home.html to display the sign up page
-1. Create SignupPageView in # accounts/views.py
-2. Create # accounts/urls.py & add code.
-3. Edit MFD_SITE/urls.py adding:
-	path("accounts/", include("accounts.urls")), # new
-4. Create templates/registration/signup.html
-5. Edit home.html Add: <a href="{% url 'signup' %}">Sign Up</a>
-6. Test adding a new user (testuser)
-----------------------------------------------------
-Tests: ---->
-Add SignUpPageTests to accounts/tests.py
-Run tests:
->docker-compose exec web python manage.py test
-Add setup() to accounts/tests.py (complete change)
-------------------------------------------------------------
-Git
-> git status
-> git add .
-> git commit -m "Added user registration - ch6"
-
 
 
 --------------------------------------------------
