@@ -37,13 +37,35 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites", # new (p-132)
     # Third-party
     "crispy_forms", # new (p-125)
     "crispy_bootstrap5", # new (p-125)
+    "allauth", # new (p-132)
+    "allauth.account", # new (p-132)
     # Local
 	"accounts.apps.AccountsConfig", # new
     "pages.apps.PagesConfig", # forgot to add it till now (p-125)
 ]
+
+# django-allauth config (p-132)
+LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT = "home" # new (p-135)
+SITE_ID = 1 # new (p-132)
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend", # have no effect (p-132)
+    "allauth.account.auth_backends.AuthenticationBackend", # new
+)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # new (p-134)
+ACCOUNT_SESSION_REMEMBER = True # new (p-139) [Removes Remember me]
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False # new (p-142)
+# using allauth (p-16)
+ACCOUNT_USERNAME_REQUIRED = False # new
+ACCOUNT_AUTHENTICATION_METHOD = "email" # new
+ACCOUNT_EMAIL_REQUIRED = True # new
+ACCOUNT_UNIQUE_EMAIL = True # new
+
+####
 
 AUTH_USER_MODEL = "accounts.CustomUser" # new
 

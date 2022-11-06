@@ -6,9 +6,10 @@ urlpatterns = [
 	# Django admin
 	path("admin/", admin.site.urls),
 	# User management
-	path("accounts/", include("django.contrib.auth.urls")), # new
+	path("accounts/", include("allauth.urls")), # new (p-136)
+	# path("accounts/", include("django.contrib.auth.urls")), # new	(Remove p-136)
 	# Local apps
-    path("accounts/", include("accounts.urls")), # new page 101
+  # path("accounts/", include("accounts.urls")), # new page 101 (Remove p-136)
 	path("", include("pages.urls")),
 ]
 
