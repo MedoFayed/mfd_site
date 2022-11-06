@@ -238,7 +238,7 @@ class HomePageView(TemplateView):
 >docker-compose up -d
 Test in browser
 ....
-EDIT 
+EDIT
 # pages/tests.py
 from django.test import SimpleTestCase
 from django.urls import reverse
