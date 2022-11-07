@@ -14,3 +14,5 @@ Then created this new file
 Completed Chapter 11. Have to read it again specially for removing the volume
 
 #### 2022-11-07, 10:37 AM
+
+#### 2022-11-07, 12:36 PM - Chapter 12 completed
