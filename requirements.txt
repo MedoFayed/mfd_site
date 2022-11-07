@@ -4,5 +4,6 @@ psycopg2-binary==2.9.5
 django-crispy-forms
 crispy-bootstrap5
 django-allauth
+environs[django]
 sqlparse==0.4.3
 tzdata==2022.6

@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env # new (p-153)
+
+env = Env() # new (p-153)
+env.read_env() # new (p-153)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-spa!4(muo%a#hzen3v)^c@o@hhmfj&x0&y60!)-4$1xenczu)%'
+# SECRET_KEY = 'django-insecure-spa!4(muo%a#hzen3v)^c@o@hhmfj&x0&y60!)-4$1xenczu)%'
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+# DEBUG = True
+DEBUG = env.bool("DJANGO_DEBUG") # new
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"] # new (p-157)
 
+# DEBUG = False # new (p-157)
+# ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"] # new (p-157)
 
 # Application definition
 
@@ -113,6 +122,12 @@ DATABASES = {
     }
 }
 """
+# (p-158) use environ
+DATABASES = {
+	"default": env.dj_db_url("DATABASE_URL",
+	default="postgres://postgres@db/postgres")
+}
+"""
 DATABASES = {
 	"default": {
 		"ENGINE": "django.db.backends.postgresql",
@@ -123,6 +138,7 @@ DATABASES = {
 		"PORT": 5432,
 	}
 }
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -174,3 +190,4 @@ LOGOUT_REDIRECT_URL = "home" # new
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" # new (p-126)
 CRISPY_TEMPLATE_PACK = "bootstrap5" # new (p-126)
+

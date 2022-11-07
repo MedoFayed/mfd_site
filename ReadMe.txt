@@ -1,7 +1,17 @@
 Create requirements.txt
 	Django==4.1.3
 	psycopg2-binary
-
+At p-153:
+***************************************
+asgiref==3.5.2
+Django==4.0.4
+psycopg2-binary==2.9.3
+sqlparse==0.4.2
+django-crispy-forms==1.14.0
+crispy-bootstrap5==0.6
+django-allauth==0.50.0
+environs[django]==9.5.0
+***************************************
 d:\#_DEV_Docker\wsv4\mfd_site\
 > py -m venv .venv
 > .venv\scripts\activate
@@ -102,7 +112,7 @@ INSTALLED_APPS = [
 ...
 AUTH_USER_MODEL = "accounts.CustomUser" # new
 2.2.
-Time to create a migrations file for the changes. We’ll add the optional app name accounts to the command so that only changes to that app are included.
+Time to create a migrations file for the changes. Weï¿½ll add the optional app name accounts to the command so that only changes to that app are included.
 >docker-compose exec web python manage.py makemigrations accounts
 
 >docker-compose exec web python manage.py migrate
@@ -111,13 +121,13 @@ Time to create a migrations file for the changes. We’ll add the optional app nam
 Create accounts/forms.py
 Fill in as shown in app.
 Note: --------------------------
-	At the very top we’ve imported CustomUser model via get_user_model41 which looks to our AUTH_USER_MODEL config in settings.py. This might feel a bit more circular than directly importing CustomUser here, but it enforces the idea of making one single reference to the custom user model rather than directly referring to it all over our project.
+	At the very top weï¿½ve imported CustomUser model via get_user_model41 which looks to our AUTH_USER_MODEL config in settings.py. This might feel a bit more circular than directly importing CustomUser here, but it enforces the idea of making one single reference to the custom user model rather than directly referring to it all over our project.
 --------------------------------------------------
-	Next we import UserCreationForm42 and UserChangeForm43 which will both be extended. Then create two new forms–CustomUserCreationForm and CustomUserChangeForm–that extend the base user forms imported above and specify swapping in our CustomUser model and displaying the fields email and username. The password field is implicitly included by default and so does not need to be explicitly named here as well
+	Next we import UserCreationForm42 and UserChangeForm43 which will both be extended. Then create two new formsï¿½CustomUserCreationForm and CustomUserChangeFormï¿½that extend the base user forms imported above and specify swapping in our CustomUser model and displaying the fields email and username. The password field is implicitly included by default and so does not need to be explicitly named here as well
 --------------------------------------------------
 [Custom User Admin] -------------------
 Finally we have to update our accounts/admin.py file. The admin is a common place to manipulate user data and there is tight coupling between the built-in User and the admin.
-We’ll extend the existing UserAdmin into CustomUserAdmin and tell Django to use our new forms and custom user model. We can also list any user attributes44 we want but for now will just focus on three: email, username, and superuser status.
+Weï¿½ll extend the existing UserAdmin into CustomUserAdmin and tell Django to use our new forms and custom user model. We can also list any user attributes44 we want but for now will just focus on three: email, username, and superuser status.
 --------------------------------------------------
 # accounts/admin.py
 from django.contrib import admin
@@ -200,7 +210,7 @@ d:\#_DEV_Docker\wsv4\mfd_site(main -> origin)
 =====================================================
 Chapter 5: Pages App:
 ----------------------
-Let’s build a homepage for our new project.
+Letï¿½s build a homepage for our new project.
 > docker-compose exec web python manage.py startapp pages
 Update INSTALLED_APPS (settings.py).
 	"pages.apps.PagesConfig", # new
@@ -294,7 +304,7 @@ Auth App: -------------
 Django provides us with the necessary views and urls which means we only need to update a template for things to work.
 * Make sure the auth app is included in our INSTALLED_APPS setting ("django.contrib.auth",).
 Auth URLs and Views: -------------
-To use Django’s built-in auth app we must explicitly add it to our mfd_site/urls.py file. The easiest approach is to use accounts/ as the prefix.
+To use Djangoï¿½s built-in auth app we must explicitly add it to our mfd_site/urls.py file. The easiest approach is to use accounts/ as the prefix.
 
 # mfd_site/urls.py
 from django.contrib import admin
@@ -383,11 +393,11 @@ LOGIN_REDIRECT_URL = "home" # new
 Log Out: ----->
 Sign Up: ----->
 * Basic steps:
-• create an app-level accounts/urls.py file
-• update the project-level django_project/urls.py to point to the accounts app
-• add a view called SignupPageView
-• create a signup.html template file
-• update home.html to display the sign up page
+ï¿½ create an app-level accounts/urls.py file
+ï¿½ update the project-level django_project/urls.py to point to the accounts app
+ï¿½ add a view called SignupPageView
+ï¿½ create a signup.html template file
+ï¿½ update home.html to display the sign up page
 1. Create SignupPageView in # accounts/views.py
 2. Create # accounts/urls.py & add code.
 3. Edit MFD_SITE/urls.py adding:
