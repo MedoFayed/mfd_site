@@ -191,3 +191,6 @@ LOGOUT_REDIRECT_URL = "home" # new
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" # new (p-126)
 CRISPY_TEMPLATE_PACK = "bootstrap5" # new (p-126)
 
+# DEFAULT_FROM_EMAIL = "admin@djangobookstore.com" # new (p-165)
+# edited by me
+DEFAULT_FROM_EMAIL = "admin@mfd_site.com" # new 
