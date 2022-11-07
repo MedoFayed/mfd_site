@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     # Local
 	"accounts.apps.AccountsConfig", # new
     "pages.apps.PagesConfig", # forgot to add it till now (p-125)
+    "books.apps.BooksConfig", # new (p-171)
 ]
 
 # django-allauth config (p-132)

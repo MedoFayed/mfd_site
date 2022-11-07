@@ -7,5 +7,10 @@ Then created this new file
 
 ## Completed Chapter 9
 
-details are in readme.txt
-CAIRO, EGYPT: 07-11-2022 At 03:08 AM.
+### details are in readme.txt
+
+### CAIRO, EGYPT: 07-11-2022 At 03:08 AM
+
+Completed Chapter 11. Have to read it again specially for removing the volume
+
+#### 2022-11-07, 10:37 AM

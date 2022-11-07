@@ -11,6 +11,7 @@ urlpatterns = [
 	# Local apps
   # path("accounts/", include("accounts.urls")), # new page 101 (Remove p-136)
 	path("", include("pages.urls")),
+	path("books/", include("books.urls")), # new
 ]
 
 """
