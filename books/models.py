@@ -16,12 +16,22 @@ class Book(models.Model):
     # cover = models.ImageField(upload_to="covers/") # new
     cover = models.ImageField(upload_to="covers/", blank=True) # new
 
+    class Meta: # new
+        permissions = [
+            ("special_status", "Can read all books"),
+        ]
+
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse("book_detail", args=[str(self.id)])
 
+"""
+The order of the inner classes and methods here is deliberate. It follows the Model stylea
+section from the Django documentation
+"""
 
 class Review(models.Model):  # new
     book = models.ForeignKey(
